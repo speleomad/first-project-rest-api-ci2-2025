@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restapicontactmanagement.business.services.ContactService;
 import com.example.restapicontactmanagement.dao.entities.Contact;
+import com.example.restapicontactmanagement.exceptions.DuplicateContactException;
 import com.example.restapicontactmanagement.web.dto.ContactDTO;
 import com.example.restapicontactmanagement.web.dto.ContactSummaryDTO;
 
@@ -47,14 +48,14 @@ public class ContactController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addContact(@RequestBody ContactDTO contactDTO) {
+    public ResponseEntity<?> addContact(@RequestBody ContactDTO contactDTO) throws DuplicateContactException  {
        
         Contact contact = ContactDTO.fromContactDTO(contactDTO);
         return new ResponseEntity<>(this.contactService.addContact(contact), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateContact(@PathVariable(name="id") Long id, @RequestBody ContactDTO contactDTO){
+    public ResponseEntity<?> updateContact(@PathVariable(name="id") Long id, @RequestBody ContactDTO contactDTO) throws DuplicateContactException {
         Contact contact = ContactDTO.fromContactDTO(contactDTO);
         return new ResponseEntity<>(this.contactService.updateContact(id, contact), HttpStatus.OK);
 

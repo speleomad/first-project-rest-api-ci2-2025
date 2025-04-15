@@ -22,6 +22,7 @@ public record ContactDTO(
         .email(contact.getEmail())
         .website(contact.getWebsite())
         .projects(contact.getProjects())
+        .image(contact.getImage())
         .featured(contact.isFeatured()).build();
     return contactDTO;
      //Without builder
